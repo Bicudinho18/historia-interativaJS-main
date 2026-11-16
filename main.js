@@ -1,3 +1,4 @@
+
 const caixaPrincipal = document.querySelector(".caixa-principal");
 const caixaPerguntas = document.querySelector(".caixa-perguntas");
 const caixaAlternativas = document.querySelector(".caixa-alternativas");
@@ -10,12 +11,17 @@ const perguntas = [
     alternativas: [
       {
         texto: "Educação.",
-        afirmacao: "afirmacao"
+        afirmacao: [
+          "A educação melhora a qualidade de vida da população.",
+          "Investir em escolas prepara os jovens para o futuro."
+        ]
       },
       {
         texto: "Saúde.",
-        afirmacao: "afirmacao"
-
+        afirmacao: [
+          "Investir na saúde garante melhor atendimento à população.",
+          "Hospitais e postos de saúde bem equipados ajudam a prevenir doenças."
+        ]
       }
     ]
   },
@@ -24,11 +30,17 @@ const perguntas = [
     alternativas: [
       {
         texto: "Investir em infraestrutura.",
-        afirmacao: "afirmacao"
+        afirmacao: [
+          "A construção de reservatórios melhora o abastecimento de água.",
+          "A manutenção das tubulações evita desperdícios."
+        ]
       },
       {
         texto: "Criar campanhas de conscientização.",
-        afirmacao: "afirmacao"
+        afirmacao: [
+          "As campanhas incentivam o uso consciente da água.",
+          "A população aprende a evitar o desperdício."
+        ]
       }
     ]
   },
@@ -37,11 +49,17 @@ const perguntas = [
     alternativas: [
       {
         texto: "Aumentar a coleta.",
-        afirmacao: "afirmacao"
+        afirmacao: [
+          "A coleta frequente mantém as ruas limpas.",
+          "A redução do lixo evita problemas de saúde pública."
+        ]
       },
       {
         texto: "Investir em reciclagem.",
-        afirmacao: "afirmacao"
+        afirmacao: [
+          "A reciclagem diminui a quantidade de lixo nos aterros.",
+          "A separação dos resíduos ajuda a preservar o meio ambiente."
+        ]
       }
     ]
   },
@@ -50,11 +68,17 @@ const perguntas = [
     alternativas: [
       {
         texto: " Melhorar o transporte público.",
-        afirmacao: "afirmacao"
+        afirmacao: [
+          "O transporte público eficiente diminui o número de carros nas ruas.",
+          "Mais ônibus e melhorias nas linhas ajudam a reduzir congestionamentos."
+        ]
       },
       {
         texto: "Construir novas vias.",
-        afirmacao: "afirmacao"
+        afirmacao: [
+          "Novas vias podem melhorar a circulação de veículos.",
+          "O planejamento das ruas ajuda a diminuir os congestionamentos."
+        ]
       }
     ]
 
@@ -64,12 +88,17 @@ const perguntas = [
     alternativas: [
       {
         texto: " A cidade ficou mais sustentável.",
-        afirmacao: "afirmacao"
+        afirmacao: [
+          "A cidade passou a utilizar melhor seus recursos naturais.",
+          "Os investimentos ambientais melhoraram a qualidade de vida."
+        ]
       },
       {
         texto: "A cidade melhorou economicamente, mas ainda enfrenta problemas ambientais.",
-        afirmacao: "afirmacao"
-
+        afirmacao: [
+          "A economia da cidade cresceu e gerou novas oportunidades.",
+          "Ainda é necessário investir em ações para diminuir os problemas ambientais."
+        ]
       }
     ]
   },
@@ -80,8 +109,13 @@ let perguntaAtual;
 let historiaFinal = "";
 
 function mostraPergunta() {
+  if (atual>= perguntas.length){
+    mostraResultado();
+    return;
+  }
   perguntaAtual = perguntas[atual];
   caixaPerguntas.textContent = perguntaAtual.enunciado
+  caixaAlternativas.textContent = "";
   mostraAlternativas();
 }
 
@@ -94,9 +128,21 @@ function mostraAlternativas() {
   }
 }
 function respostaSelecionada(opcaoSelecionada) {
-  const afirmacoes = opcaoSelecionada.afirmacoes;
-  historiaFinal += afirmacoes + " ";
+  const afirmacao = aleatorio(opcaoSelecionada.afirmacao);
+  historiaFinal += afirmacao + " ";
   atual++;
   mostraPergunta();
 }
+
+function mostraResultado(){
+  caixaPerguntas.textContent = "Em 2030 ...";
+  textoResultado.textContent = historiaFinal;
+  caixaAlternativas.textContent = "";
+}
+
+function aleatorio(lista){
+  const posicao = Math.floor(Math.random()*lista.length);
+  return lista[posicao];
+}
+
 mostraPergunta();
